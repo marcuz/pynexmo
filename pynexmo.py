@@ -62,7 +62,7 @@ final_url = "%s/%susername=%s&password=%s&from=%s&to=%s&text=%s" % (api_url, api
 if confirm(sms_from, sms_to, sms_msg):
     res = fetch(url_fix(final_url))
     if res['messages'][0]['status'] == "0":
-        print("SMS succesfully sent to '%s'. Available balance: %s") % (sms_to + res['messages'][0]['remaining-balance'])
+        print("SMS succesfully sent to '%s'. Available balance: %s") % (sms_to, res['messages'][0]['remaining-balance'])
     else:
         print("Something went wrong, you suuuck (or maybe API do)! Error message: '%s'") % res['messages'][0]['error-text']
 
