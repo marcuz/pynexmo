@@ -1,1 +1,6 @@
 Simple CLI to send SMS via nexmo API (http://www.nexmo.com/)
+
+Set:
+- api_user (string, your API username)
+- api_pass (string, your API password)
+- num_from (dictionary, multiple senders)
