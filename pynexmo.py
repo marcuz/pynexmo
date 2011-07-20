@@ -7,8 +7,8 @@ import urlparse
 import math
 
 api_url = "http://rest.nexmo.com/sms/json"
-api_user = "b273d373"
-api_pass = "532a805f"
+api_user = "*******"
+api_pass = "*******"
 num_from = {'it': '0039**********', 'nl': '0031*********'}
 
 sms_chars = 160
