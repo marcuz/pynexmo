@@ -4,3 +4,5 @@ Set:
 - api_user (string, your API username)
 - api_pass (string, your API password)
 - num_from (dictionary, multiple senders)
+
+Very special thanks to @the_mindflayer
