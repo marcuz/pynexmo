@@ -46,7 +46,7 @@ def select_message(retry):
     msg = raw_input(in_msg)
     if len(msg) > 0:
         return msg
-    select_message(True)
+    return select_message(True)
 
 def confirm(sender, recipient, message, smsd):
     sms_len, sms_num = smsd
@@ -74,16 +74,19 @@ def main():
             api_user, api_pass, sms_from, sms_to, sms_msg)
 
     if confirm(sms_from, sms_to, sms_msg, sms_data):
+        success = False
         res = url_fetch(url_fix(final_url))
         print("")
         for s in range(int(res['message-count'])):
-            api_bal = res['messages'][s]['remaining-balance']
             out = "SMS %d/%d to '%s' " % (s + 1, sms_num, sms_to)
             if res['messages'][s]['status'] == "0":
                 print(out + "ok.")
+                api_bal = res['messages'][s]['remaining-balance']
+                success = True
             else:
                 print(out + "failed: '%s'") % res['messages'][s]['error-text']
-        print("\nAvailable balance: %s, ktnxbye") % api_bal
+        if success:
+            print("\nAvailable balance: %s, ktnxbye") % api_bal
 
 if __name__ == "__main__":
     sys.exit(main());
