@@ -7,8 +7,8 @@ import urlparse
 import math
 
 api_url = "http://rest.nexmo.com/sms/json"
-api_user = "b273d373"
-api_pass = "532a805f"
+api_user = "changeme"
+api_pass = "changeme"
 num_from = {'it': '0039**********', 'nl': '0031*********'}
 
 sms_chars = 160
@@ -59,29 +59,33 @@ def confirm(sender, recipient, message, smsd):
         return True
     return False
 
-sms_from = select_from(num_from)
-sms_to = select_to()
-sms_msg = select_message(False)
-sms_len = len(sms_msg)
-sms_num = math.ceil(float(sms_len) / sms_chars)
-sms_data = sms_len, sms_num
+def main():
+    sms_from = select_from(num_from)
+    sms_to = select_to()
+    sms_msg = select_message(False)
+    sms_len = len(sms_msg)
+    sms_num = math.ceil(float(sms_len) / sms_chars)
+    sms_data = sms_len, sms_num
 
-if not sms_to:
-    sys.exit("'To' field is not a valid number, ktnxbye.")
+    if not sms_to:
+        sys.exit("'To' field is not a valid number, ktnxbye.")
 
-final_url = "%s?username=%s&password=%s&from=%s&to=%s&text=%s" % (api_url,
-        api_user, api_pass, sms_from, sms_to, sms_msg)
+    final_url = "%s?username=%s&password=%s&from=%s&to=%s&text=%s" % (api_url,
+            api_user, api_pass, sms_from, sms_to, sms_msg)
 
-if confirm(sms_from, sms_to, sms_msg, sms_data):
-    res = url_fetch(url_fix(final_url))
-    print("")
-    for s in range(int(res['message-count'])):
-        api_bal = res['messages'][s]['remaining-balance']
-        out = "SMS %d/%d to '%s' " % (s + 1, sms_num, sms_to)
-        if res['messages'][s]['status'] == "0":
-            print(out + "ok.")
-        else:
-            print(out + "failed: '%s'") % res['messages'][s]['error-text']
-    print("\nAvailable balance: %s, ktnxbye") % api_bal
+    if confirm(sms_from, sms_to, sms_msg, sms_data):
+        res = url_fetch(url_fix(final_url))
+        print("")
+        for s in range(int(res['message-count'])):
+            api_bal = res['messages'][s]['remaining-balance']
+            out = "SMS %d/%d to '%s' " % (s + 1, sms_num, sms_to)
+            if res['messages'][s]['status'] == "0":
+                print(out + "ok.")
+            else:
+                print(out + "failed: '%s'") % res['messages'][s]['error-text']
+        print("\nAvailable balance: %s, ktnxbye") % api_bal
+
+if __name__ == "__main__":
+    sys.exit(main());
 
 # EOF
