@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 '''
 Created on Jul 20, 2011
-Last modified Mar 19, 2013
+Last modified May 16, 2013
 
 @author: marco
 '''
-
 
 import sys
 import json
@@ -33,7 +32,10 @@ def __url_fix(s, charset='utf-8'):
 
 
 def __url_fetch(url):
-    return json.load(urllib2.urlopen(url))
+    try:
+        return json.load(urllib2.urlopen(url))
+    except Exception, e:
+        sys.exit("\nFailed to fetch API endpoint, exiting: %s" % e.reason)
 
 
 def __select_from(numbers):
@@ -76,12 +78,15 @@ def __confirm(sender, recipient, message, smsd):
 
 
 def main():
-    sms_from = __select_from(num_from)
-    sms_to = __select_to()
-    sms_msg = __select_message(False)
-    sms_len = len(sms_msg)
-    sms_num = math.ceil(float(sms_len) / sms_chars)
-    sms_data = sms_len, sms_num
+    try:
+        sms_from = __select_from(num_from)
+        sms_to = __select_to()
+        sms_msg = __select_message(False)
+        sms_len = len(sms_msg)
+        sms_num = math.ceil(float(sms_len) / sms_chars)
+        sms_data = sms_len, sms_num
+    except KeyboardInterrupt:
+        sys.exit("\n\nRequest to quit, exiting.")
 
     if not sms_to:
         sys.exit("'To' field is not a valid number, ktnxbye.")
@@ -96,7 +101,9 @@ def main():
         for s in range(int(res['message-count'])):
             out = "SMS %d/%d to '%s' " % (s + 1, sms_num, sms_to)
             if res['messages'][s]['status'] == "0":
-                print(out + "ok (%s)" % res['messages'][s]['message-price'])
+                print(out + "ok (cost: %s, msgid: %s)" %
+                      (res['messages'][s]['message-price'],
+                       res['messages'][s]['message-id']))
                 api_bal = res['messages'][s]['remaining-balance']
                 success = True
             else:
