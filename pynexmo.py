@@ -38,7 +38,7 @@ def __url_fix(s, charset='utf-8'):
     scheme, netloc, path, qs, anchor = urlparse.urlsplit(s)
     path = urllib.quote(path, '/%')
     qs = urllib.quote_plus(qs, ':&=')
-    return urlparse.urlunsplit((scheme, netloc, path, qs, anchor))
+    return urlparse.urlunsplit((scheme, netloc, path, qs, anchor)).replace("#","%23")
 
 
 def __url_fetch(url):
