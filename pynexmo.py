@@ -33,12 +33,14 @@ import urllib
 import urllib2
 import urlparse
 import math
+import ConfigParser
 
 api_url = "https://rest.nexmo.com/sms/json"
-api_user = "changeme"
-api_pass = "changeme"
-num_from = {'it': '39**********', 'uk': '44*********'}
-
+config = ConfigParser.ConfigParser()
+config.read('config.ini')
+api_user = config.get('default','api_user')
+api_pass = config.get('default','api_pass')
+num_from = config._sections['num_from']
 sms_chars = 160
 
 

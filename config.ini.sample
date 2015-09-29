@@ -1,0 +1,7 @@
+[default]
+api_user = changeme
+api_pass = changeme
+
+[num_from]
+it = "39**********"
+uk = "44*********"
