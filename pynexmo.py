@@ -38,8 +38,8 @@ import ConfigParser
 api_url = "https://rest.nexmo.com/sms/json"
 config = ConfigParser.ConfigParser()
 config.read('config.ini')
-api_user = config.get('default','api_user')
-api_pass = config.get('default','api_pass')
+api_key = config.get('default','api_key')
+api_secret = config.get('default','api_secret')
 num_from = config._sections['num_from']
 sms_chars = 160
 
@@ -114,8 +114,8 @@ def main():
     if not sms_to:
         sys.exit("'To' field is not a valid number, ktnxbye.")
 
-    final_url = "%s?username=%s&password=%s&from=%s&to=%s&text=%s" % (api_url,
-                api_user, api_pass, sms_from, sms_to, sms_msg)
+    final_url = "%s?api_key=%s&api_secret=%s&from=%s&to=%s&text=%s" % (api_url,
+                api_key, api_secret, sms_from, sms_to, sms_msg)
 
     if __confirm(sms_from, sms_to, sms_msg, sms_data):
         success = False
