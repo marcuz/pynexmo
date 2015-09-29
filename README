@@ -1,8 +1,8 @@
-Simple CLI to send SMS via nexmo API (http://www.nexmo.com/)
+Simple CLI to send SMS via nexmo API (https://www.nexmo.com/)
 
 Rename the config.ini.sample to config.ini and fill out the following:
-- api_user (string, your API username)
-- api_pass (string, your API password)
+- api_key (string, your API username)
+- api_secret (string, your API password)
 - num_from (dictionary, multiple senders)
 
 Very special thanks to @the_mindflayer
