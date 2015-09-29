@@ -1,6 +1,6 @@
 [default]
-api_user = "changeme"
-api_pass = "changeme"
+api_user = changeme
+api_pass = changeme
 
 [num_from]
 it = "39**********"
